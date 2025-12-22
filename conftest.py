@@ -1,5 +1,6 @@
 import pytest
 
+from selenium import webdriver
 from modules.api.clients.github import GitHub
 
 
@@ -32,3 +33,11 @@ def user():
 def github_api():
     api = GitHub()
     yield api
+
+
+@pytest.fixture
+def driver():
+    driver = webdriver.Chrome()
+    driver.maximize_window()
+    yield driver
+    driver.quit()
