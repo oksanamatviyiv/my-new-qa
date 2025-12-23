@@ -57,6 +57,10 @@ class Database():
         record = self.cursor.fetchall()
         return record
 
-    
-    
-    
+    def get_users_with_empty_fields(self):
+        query = "SELECT name, address, city FROM customers WHERE \
+                name IS NULL OR TRIM(name) = '' \
+                OR address IS NULL OR TRIM(address) = '' \
+                OR city IS NULL OR TRIM(city) = ''"
+        self.cursor.execute(query)
+        return self.cursor.fetchall()
