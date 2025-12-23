@@ -62,3 +62,69 @@ def test_detailed_orders():
     assert orders[0][1] == 'Sergii'
     assert orders[0][2] == 'солодка вода'
     assert orders[0][3] == 'з цукром'
+
+
+    
+@pytest.mark.database
+def test_get_all_users():
+    db = Database()
+    users = db.get_all_users()
+
+    assert isinstance(users, list)
+    assert len(users) > 0
+    
+    
+@pytest.mark.database
+def test_get_detailed_orders_count():
+    db = Database()
+    orders = db.get_detailed_orders()
+
+    assert isinstance(orders, list)
+    assert len(orders) > 0  
+    
+    
+@pytest.mark.database
+def test_get_user_address_by_name_not_found():
+    db = Database()
+    user = db.get_user_address_by_name('NonExistentName')
+
+    assert user == []
+    
+    
+@pytest.mark.database
+def test_update_product_qnt_by_id_invalid_id():
+    db = Database()   
+    invalid_product_id = 999999
+    new_quantity = 50
+    db.update_product_qnt_by_id(invalid_product_id, new_quantity)
+
+    result = db.select_product_qnt_by_id(invalid_product_id)
+    assert result == []
+    
+    
+@pytest.mark.database
+def test_get_detailed_orders():
+    db = Database()
+    orders = db.get_detailed_orders()
+
+    assert isinstance(orders, list)
+    assert len(orders[0]) == 5
+
+@pytest.mark.database
+def test_get_all_users_fields_not_empty():
+    db = Database()
+    users = db.get_all_users()
+
+    name, address, city = users[0]
+
+    assert isinstance(name, str) and name.strip() != ""
+    assert isinstance(address, str) and address.strip() != ""
+    assert isinstance(city, str) and city.strip() != ""
+
+
+@pytest.mark.database
+def test_no_users_with_empty_fields_sql():
+    db = Database()
+    invalid_users = db.get_users_with_empty_fields()
+
+    assert invalid_users == []
