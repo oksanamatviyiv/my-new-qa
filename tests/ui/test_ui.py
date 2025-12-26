@@ -13,8 +13,7 @@ from selenium.webdriver.support import expected_conditions as EC
 def test_check_incorrect_username():
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 
-
-    # відкриваємо сторінку https://github.com/login 
+    # відкриваємо сторінку https://github.com/login
     driver.get("https://github.com/login")
 
     # Знаходимо поле, в яке будемо вводити неправильне ім'я користувача або поштову адресу
@@ -37,7 +36,7 @@ def test_check_incorrect_username():
 
     # Перевіряємо, що назва сторінки така, яку ми очікуємо
     assert driver.title == "Sign in to GitHub · GitHub"
-    
+
     # Закриваємо браузер
     driver.close()
 
@@ -52,34 +51,34 @@ def test_open_and_close_cart_modal():
 
     # 2. Click cart button by testid
     cart_button = wait.until(
-        EC.element_to_be_clickable(
-            (By.CSS_SELECTOR, "[data-testid='header-cart-btn']")
-        )
+        EC.element_to_be_clickable((By.CSS_SELECTOR, "[data-testid='header-cart-btn']"))
     )
     cart_button.click()
-    #time.sleep(3)  # observation / pause
+    # time.sleep(3)  # observation / pause
 
     # 3. Assert overlay
     modal = wait.until(
-            EC.visibility_of_element_located((By.CSS_SELECTOR, "[data-testid='modal-content']"))
+        EC.visibility_of_element_located(
+            (By.CSS_SELECTOR, "[data-testid='modal-content']")
         )
+    )
     assert modal.is_displayed()
 
     # 4. Close modal by close button
     close_btn = wait.until(
-            EC.element_to_be_clickable((
-                By.CSS_SELECTOR,
-                "[data-testid='modal-close-btn']"
-            ))
-        )
+        EC.element_to_be_clickable((By.CSS_SELECTOR, "[data-testid='modal-close-btn']"))
+    )
     close_btn.click()
 
     # 5. Assert modal disappears
-    wait.until(EC.invisibility_of_element_located((By.CSS_SELECTOR, "[data-testid='modal-content']")))
+    wait.until(
+        EC.invisibility_of_element_located(
+            (By.CSS_SELECTOR, "[data-testid='modal-content']")
+        )
+    )
 
     driver.close()
-    
-    
+
 
 @pytest.mark.ui
 def test_open_cart_from_product_page():
@@ -90,35 +89,30 @@ def test_open_cart_from_product_page():
     # Open product page (example product)
     driver.get("https://rozetka.com.ua/ua/459901394/p459901394/")
 
-    buy_btn = wait.until(
-        EC.element_to_be_clickable((
-            By.XPATH,
-            "//button[contains(., 'Купити')]"
-            ))
-        )
+    buy_btn = wait.until(EC.element_to_be_clickable((By.CLASS_NAME, "buy-button")))
 
     driver.get("https://rozetka.com.ua/ua/cart/")
 
     # Assert: cart page loaded (URL check)
     wait.until(EC.url_contains("/cart"))
     assert "cart" in driver.current_url
-    
+
     driver.close()
-    
-    
-    
+
+
 @pytest.mark.ui
 def test_parcel_input_default_state():
     driver = webdriver.Chrome()
     wait = WebDriverWait(driver, 10)
-    
+
     # відкриваємо сторінку https://tracking.novaposhta.ua/
     driver.get("https://tracking.novaposhta.ua/")
-    
 
     # Перевіряємо плейсхолдер наявність тексту "Номер посилки"
     parcel_input = wait.until(
-        EC.presence_of_element_located((By.CSS_SELECTOR, "input[placeholder='Номер посилки']"))
+        EC.presence_of_element_located(
+            (By.CSS_SELECTOR, "input[placeholder='Номер посилки']")
+        )
     )
     assert parcel_input.get_attribute("placeholder") == "Номер посилки"
 

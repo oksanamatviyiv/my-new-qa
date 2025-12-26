@@ -10,27 +10,23 @@ class GitHub:
 
     def search_repo(self, name):
         r = requests.get(
-            "https://api.github.com/search/repositories",
-            params={"q": name}
+            "https://api.github.com/search/repositories", params={"q": name}
         )
         body = r.json()
 
         return body
-    
+
     def get_emojis(self):
         r = requests.get("https://api.github.com/emojis")
         body = r.json()
 
         return body
-    
+
     def list_commits(self, owner, repo, **params):
         r = requests.get(
-            f"https://api.github.com/repos/{owner}/{repo}/commits",
-            params=params
+            f"https://api.github.com/repos/{owner}/{repo}/commits", params=params
         )
 
         body = r.json()
 
         return body
-    
-    

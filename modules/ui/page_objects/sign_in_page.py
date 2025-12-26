@@ -1,13 +1,12 @@
-from selenium import webdriver
 from modules.ui.page_objects.base_page import BasePage
 from selenium.webdriver.common.by import By
 
 
 class SignInPage(BasePage):
-    URL = 'https://github.com/login'
-    
-    def __init__(self) -> None:
-        super().__init__()
+    URL = "https://github.com/login"
+
+    def __init__(self, driver) -> None:
+        super().__init__(driver)
 
     def go_to(self):
         self.driver.get(SignInPage.URL)
@@ -33,4 +32,3 @@ class SignInPage(BasePage):
 
     def check_title(self, expected_title):
         return self.driver.title == expected_title
-

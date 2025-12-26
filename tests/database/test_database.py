@@ -7,6 +7,7 @@ def test_database_connection():
     db = Database()
     db.test_connection()
 
+
 @pytest.mark.database
 def test_check_all_users():
     db = Database()
@@ -14,16 +15,18 @@ def test_check_all_users():
 
     print(users)
 
+
 @pytest.mark.database
 def test_check_user_sergii():
     db = Database()
-    user = db.get_user_address_by_name('Sergii')
+    user = db.get_user_address_by_name("Sergii")
 
-    assert user[0][0] == 'Maydan Nezalezhnosti 1'
-    assert user[0][1] == 'Kyiv'
-    assert user[0][2] == '3127'
-    assert user[0][3] == 'Ukraine'
-    
+    assert user[0][0] == "Maydan Nezalezhnosti 1"
+    assert user[0][1] == "Kyiv"
+    assert user[0][2] == "3127"
+    assert user[0][3] == "Ukraine"
+
+
 @pytest.mark.database
 def test_product_qnt_update():
     db = Database()
@@ -32,22 +35,25 @@ def test_product_qnt_update():
 
     assert water_qnt[0][0] == 25
 
+
 @pytest.mark.database
 def test_product_insert():
     db = Database()
-    db.insert_product(4, 'печиво', 'солодке', 30)
+    db.insert_product(4, "печиво", "солодке", 30)
     water_qnt = db.select_product_qnt_by_id(4)
 
     assert water_qnt[0][0] == 30
 
+
 @pytest.mark.database
 def test_product_delete():
     db = Database()
-    db.insert_product(99, 'тестові', 'дані', 999)
+    db.insert_product(99, "тестові", "дані", 999)
     db.delete_product_by_id(99)
     qnt = db.select_product_qnt_by_id(99)
 
     assert len(qnt) == 0
+
 
 @pytest.mark.database
 def test_detailed_orders():
@@ -59,12 +65,11 @@ def test_detailed_orders():
 
     # Check struture of data
     assert orders[0][0] == 1
-    assert orders[0][1] == 'Sergii'
-    assert orders[0][2] == 'солодка вода'
-    assert orders[0][3] == 'з цукром'
+    assert orders[0][1] == "Sergii"
+    assert orders[0][2] == "солодка вода"
+    assert orders[0][3] == "з цукром"
 
 
-    
 @pytest.mark.database
 def test_get_all_users():
     db = Database()
@@ -72,36 +77,36 @@ def test_get_all_users():
 
     assert isinstance(users, list)
     assert len(users) > 0
-    
-    
+
+
 @pytest.mark.database
 def test_get_detailed_orders_count():
     db = Database()
     orders = db.get_detailed_orders()
 
     assert isinstance(orders, list)
-    assert len(orders) > 0  
-    
-    
+    assert len(orders) > 0
+
+
 @pytest.mark.database
 def test_get_user_address_by_name_not_found():
     db = Database()
-    user = db.get_user_address_by_name('NonExistentName')
+    user = db.get_user_address_by_name("NonExistentName")
 
     assert user == []
-    
-    
+
+
 @pytest.mark.database
 def test_update_product_qnt_by_id_invalid_id():
-    db = Database()   
+    db = Database()
     invalid_product_id = 999999
     new_quantity = 50
     db.update_product_qnt_by_id(invalid_product_id, new_quantity)
 
     result = db.select_product_qnt_by_id(invalid_product_id)
     assert result == []
-    
-    
+
+
 @pytest.mark.database
 def test_get_detailed_orders():
     db = Database()
@@ -109,6 +114,7 @@ def test_get_detailed_orders():
 
     assert isinstance(orders, list)
     assert len(orders[0]) == 5
+
 
 @pytest.mark.database
 def test_get_all_users_fields_not_empty():
