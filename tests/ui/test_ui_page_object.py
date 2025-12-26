@@ -20,9 +20,6 @@ def test_check_incorrect_username_page_object(driver: WebDriver):
     # Перевіряємо, що назва сторінки така, яку ми очікуємо
     assert sign_in_page.check_title("Sign in to GitHub · GitHub")
 
-    # Закриваємо браузер
-    sign_in_page.close()
-
 
 @pytest.mark.ui
 def test_open_and_close_cart_modal(driver: WebDriver):

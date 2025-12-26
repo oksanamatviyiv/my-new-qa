@@ -60,6 +60,7 @@ class Database:
         return record
 
     def get_users_with_empty_fields(self):
+        # TRIM() removes spaces so we can detect fields that look filled but are actually empty.
         query = "SELECT name, address, city FROM customers WHERE \
                 name IS NULL OR TRIM(name) = '' \
                 OR address IS NULL OR TRIM(address) = '' \

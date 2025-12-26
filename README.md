@@ -1,106 +1,109 @@
 # my-new-qa
 
-Automated UI testing framework for web applications using Selenium and pytest.
+QA automation project covering UI, API, and database tests with pytest.
 
-## 📋 Description
+## Description
 
-This project is a QA automation framework designed to test web applications through UI page object model pattern. It includes tests for GitHub login and Rozetka e-commerce platform.
+This repository includes:
+- UI tests built with Selenium and the Page Object Model (GitHub login, Rozetka cart/track flow)
+- API tests against GitHub public endpoints
+- SQLite database tests for customers, orders, and products
 
-## 🛠 Technologies
+## Tech Stack
 
-- **Python** 3.x
-- **Selenium** 4.15.2 - Web browser automation
-- **pytest** 7.4.3 - Testing framework
-- **pytest-html** 4.1.1 - HTML test reports
-- **requests** 2.31.0 - HTTP library
+- Python 3.x
+- pytest
+- Selenium
+- requests
+- pytest-html
+- sqlite3 (built-in)
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 my-new-qa/
 ├── config/
-│   └── config.py           # Configuration (URLs, users, settings)
+│   └── config.py                 # URLs, users, browser settings
 ├── modules/
+│   ├── api/
+│   │   └── clients/              # API client wrappers
+│   ├── common/
+│   │   └── database.py           # SQLite helpers
 │   └── ui/
-│       └── page_objects/
-│           ├── base_page.py        # Base page class
-│           ├── sign_in_page.py     # GitHub login page
-│           ├── header.py           # Header component
-│           ├── cart_page.py        # Shopping cart page
-│           └── track_page.py       # Tracking page
+│       └── page_objects/         # UI page objects
 ├── tests/
-│   └── ui/
-│       └── test_ui_page_object.py  # UI tests
-├── requirements.txt        # Python dependencies
-├── pytest.ini             # pytest configuration
-├── conftest.py            # pytest fixtures
-└── README.md              # This file
+│   ├── api/                      # API tests
+│   ├── database/                 # Database tests
+│   └── ui/                       # UI tests
+├── become_qa_auto.db             # SQLite database
+├── conftest.py                   # pytest fixtures
+├── pytest.ini                    # pytest configuration
+└── requirements.txt              # Python dependencies
 ```
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 - Python 3.8+
 - pip
+- Google Chrome (or compatible) and matching ChromeDriver
 
-### Installation
+### Setup
 
-1. Clone the repository:
-```bash
-git clone <repository-url>
-cd my-new-qa
-```
-
-2. Create virtual environment:
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
-```
-
-3. Install dependencies:
-```bash
 pip install -r requirements.txt
 ```
 
-## 🧪 Running Tests
-
-Run all UI tests:
-```bash
-pytest tests/ui/ -v
-```
-
-Run specific test:
-```bash
-pytest tests/ui/test_ui_page_object.py::test_check_incorrect_username_page_object -v
-```
-
-Generate HTML report:
-```bash
-pytest tests/ui/ -v --html=report.html
-```
-
-## 📝 Test Coverage
-
-- GitHub login with invalid credentials
-- Rozetka cart modal operations
-- Product page cart functionality
-- Parcel tracking input validation
-
-## 🔧 Configuration
+### Configuration
 
 Update `config/config.py` with:
 - Test URLs
 - Valid/invalid user credentials
-- Browser settings (headless mode, window size, timeout)
+- Browser settings (headless, window size, timeouts)
 
-## 📚 Page Object Model
+Note: `modules/common/database.py` uses an absolute path to `become_qa_auto.db`. If you move the repo, update that path.
 
-Tests use the Page Object Model pattern for maintainability:
+## Running Tests
 
-- Each page has a dedicated class inheriting from `BasePage`
-- Methods represent user interactions (login, click, fill, etc.)
-- Selectors are centralized in page classes
+Run all tests:
+```bash
+pytest -v
+```
 
-## 👨‍💻 Author
+Run by area:
+```bash
+pytest tests/ui/ -v
+pytest tests/api/ -v
+pytest tests/database/ -v
+```
+
+Run by marker:
+```bash
+pytest -m api -v
+pytest -m http -v
+pytest -m database -v
+pytest -m check -v
+pytest -m change -v
+```
+
+Run a single test:
+```bash
+pytest tests/ui/test_ui_page_object.py::test_check_incorrect_username_page_object -v
+```
+
+Generate an HTML report:
+```bash
+pytest -v --html=report.html
+```
+
+## Test Coverage Overview
+
+- UI: GitHub login validation, Rozetka cart/track flows
+- API: GitHub user/repo/emoji/commit endpoints
+- Database: customer, order, and product queries/updates
+
+## Author
 
 Oksana Matviyiv

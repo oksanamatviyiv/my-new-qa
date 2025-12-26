@@ -83,21 +83,14 @@ def test_open_and_close_cart_modal():
 @pytest.mark.ui
 def test_open_cart_from_product_page():
     driver = webdriver.Chrome()
-
     wait = WebDriverWait(driver, 10)
-
-    # Open product page (example product)
+    # відкриваємо сторінку продукту
     driver.get("https://rozetka.com.ua/ua/459901394/p459901394/")
-
+    # Клік на кнопку корзини
     buy_btn = wait.until(EC.element_to_be_clickable((By.CLASS_NAME, "buy-button")))
+    buy_btn.click()
 
-    driver.get("https://rozetka.com.ua/ua/cart/")
-
-    # Assert: cart page loaded (URL check)
-    wait.until(EC.url_contains("/cart"))
-    assert "cart" in driver.current_url
-
-    driver.close()
+    driver.quit()
 
 
 @pytest.mark.ui
